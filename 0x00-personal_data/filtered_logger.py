@@ -7,6 +7,6 @@ def filter_datum(fields: str, redaction: str, message: str, separator: str)\
         -> str:
     ''' Returns the log message obfuscated '''
     for field in fields:
-        repl = field + "=" + redaction + separator
-        message = re.sub(field + "=.*?" + separator, repl, message)
+        repl = f'{field}={redaction}{separator}'
+        message = re.sub(f'{field}=.*?{separator}', repl, message)
     return message
