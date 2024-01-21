@@ -5,6 +5,7 @@ Auth module
 import fnmatch
 from flask import request
 from typing import List, TypeVar
+import os
 
 
 class Auth():
@@ -41,3 +42,11 @@ class Auth():
         current user method
         '''
         return None
+
+    def session_cookie(self, request = None):
+        '''
+        returns a cookie value from a request
+        '''
+        SESSION_NAME = os.getenv('SESSION_NAME')
+        if SESSION_NAME is not None:
+            return request.cookies.get(SESSION_NAME, None)
