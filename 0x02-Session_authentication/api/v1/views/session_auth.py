@@ -27,16 +27,14 @@ def auth_session() -> dict:
         return jsonify({"error": "no user found for this email"}), 404
 
     for user in users:
-        if not user.is_valid_password(user_pwd):
-            return jsonify({"error": "wrong password"}), 401
-
-        from api.v1.app import auth
-        session_id = auth.create_session(user.id)
-        cookie = os.getenv('SESSION_NAME', None)
-        if cookie is not None:
-            user_json = jsonify(user.to_json())
-            user_json.set_cookie(cookie, session_id)
-            return user_json
+        if user.is_valid_password(user_pwd):
+            from api.v1.app import auth
+            session_id = auth.create_session(user.id)
+            cookie = os.getenv('SESSION_NAME')
+            response = jsonify(user.to_json())
+            response.set_cookie(cookie, session_id)
+            return response
+        return jsonify({"error": "wrong password"}), 401
 
 
 @app_views.route('/auth_session/logout', methods=['DELETE'],
