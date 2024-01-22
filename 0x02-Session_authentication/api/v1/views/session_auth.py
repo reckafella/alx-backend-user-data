@@ -10,7 +10,7 @@ import os
 
 @app_views.route('/auth_session/login', methods=['POST'],
                  strict_slashes=False)
-def auth_session():
+def auth_session() -> dict:
     '''
     POST /auth_session/login (= POST /api/v1/auth_session/login)
     '''
@@ -41,7 +41,7 @@ def auth_session():
 
 @app_views.route('/auth_session/logout', methods=['DELETE'],
                  strict_slashes=False)
-def logout():
+def logout() -> dict:
     '''
     DELETE /auth_session/logout (= DELETE /api/v1/auth_session/logout)
     '''
