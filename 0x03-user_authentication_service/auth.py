@@ -75,3 +75,20 @@ class Auth:
         except ValueError:
             return None
         return session_id
+
+    def get_user_from_session_id(self, session_id: str) -> User | None:
+        '''
+        takes a single session_id string argument and returns the\
+            corresponding User or None.
+
+        If the session ID is None or no user is found, return None.\
+            Otherwise return the corresponding user.
+        '''
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+        except NoResultFound:
+            return None
+
+        if not user.session_id:
+            return None
+        return user
