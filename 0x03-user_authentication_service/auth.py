@@ -76,7 +76,7 @@ class Auth:
             return None
         return session_id
 
-    def get_user_from_session_id(self, session_id: str) -> User | None:
+    def get_user_from_session_id(self, session_id: str) -> User:
         '''
         takes a single session_id string argument and returns the\
             corresponding User or None.
@@ -89,6 +89,6 @@ class Auth:
         except NoResultFound:
             return None
 
-        if not user.session_id:
+        if user.session_id is None:
             return None
         return user
