@@ -89,6 +89,6 @@ class Auth:
         except NoResultFound:
             return None
 
-        if user.session_id is None:
+        if not user.session_id:
             return None
         return user
