@@ -69,6 +69,7 @@ class Auth:
         except NoResultFound:
             return None
         session_id = _generate_uuid()
+
         try:
             self._db.update_user(user.id, session_id=session_id)
         except ValueError:
