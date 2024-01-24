@@ -18,12 +18,11 @@ def _hash_password(password: str) -> bytes:
     return bcrypt.hashpw(password=password.encode('utf-8'), salt=salt)
 
 
-def _generate_uuid():
+def _generate_uuid() -> str:
     '''
     return a string representation of a new UUID using the uuid module
     '''
     return str(uuid.uuid4())
-
 
 
 class Auth:
