@@ -26,15 +26,15 @@ def _generate_uuid() -> str:
 
 
 class Auth:
-    """Auth class to interact with the authentication database.
-    """
-
+    '''
+    Auth class to interact with the authentication database.
+    '''
     def __init__(self):
         self._db = DB()
 
     def register_user(self, email: str, password: str) -> User:
         '''
-        takes mandatory email and password string arguments\
+        method takes mandatory email and password string arguments\
             and returns a User object.
         '''
         try:
@@ -61,7 +61,7 @@ class Auth:
         takes an email string argument and returns the session ID as a string.
 
         should find the user corresponding to the email, generate a new UUID\
-            and store it in the database as the user’s session_id, then return\
+            and store it in the database as the user's session_id, then return\
                 the session ID.
         '''
         try:
@@ -102,3 +102,21 @@ class Auth:
         except ValueError:
             return None
         return None
+
+    def get_reset_password_token(self, email: str) -> str:
+        '''
+        It take an email string argument and returns a string.
+
+        Find the user corresponding to the email.\
+            If the user does not exist,\
+                raise a ```ValueError``` exception.
+            If it exists, generate a `UUID` and update the user's\
+                `reset_token` database field. Return the token.
+        '''
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            raise ValueError('User does not exist')
+        reset_token = str(uuid.uuid4())
+        self._db.update_user(user.id, reset_token=reset_token)
+        return reset_token
